@@ -1,0 +1,12 @@
+Figures/
+H_distrib_test/
+Saved_simulations/
+cross_section_analysis.py
+H_distributions.py
+Reaction_rate.py
+simulation_log_test.txt
+test_main.py
+Validation_MC_&_convergence.py
+
+__pycache__/
+.DS_Store
