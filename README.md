@@ -38,6 +38,8 @@ MC_supra_structured/
 └── .gitignore
 
 
+---
+
 ## Main Files
 
 `utils_functions/mc_function.py`
