@@ -14,6 +14,7 @@ The code is designed to simulate energy degradation in a background gas, taking 
 
 ## Repository structure
 
+```text
 MC_supra_structured/
 │
 ├── data/
@@ -36,16 +37,27 @@ MC_supra_structured/
 ├── requirements.txt
 └── .gitignore
 
-------- Main files
 
-	-- utils_functions/mc_function.py --
-	Contains the main Monte Carlo algorithm, implemented in the function monte_carlo_numba.This function performs the particle tracking and calculates the resulting energy distribution and reaction yields.
-	-- physics/reactions.py --
-	contains relevant reactions for the energy degradation. Reactions are built as python classes.
-- physics/species.py : contains species of the background gas with their mass.
-- data/build_CS_dico.py : contains cross sections of reactions. For elastic collisions, differential cross section should be also provided to calculate the cumulative distribution function F_theta.
-- data/build_tables.py : transform the cross sections and F_theta into a good format. Interpalotation is done over a given grid. 0 is given outside the range of definition. 
-- data/cross_section_data : Folder containing cross section and differential cross section data.
+## Main Files
+
+`utils_functions/mc_function.py`
+Contains the main Monte Carlo algorithm, implemented in the function monte_carlo_numba.This function performs the particle tracking and calculates the resulting energy distribution and reaction yields.
+
+`physics/reactions.py`
+Contains the reactions considered in the simulation.
+Reactions are implemented as Python classes containing the relevant physical parameters and properties of each process.
+
+`physics/species.py`
+contains species of the background gas with their mass.
+
+`data/build_CS_dico.py`
+contains cross sections of reactions. For elastic collisions, differential cross section should be also provided to calculate the cumulative distribution function F_theta.
+
+`data/build_tables.py`
+transform the cross sections and F_theta into a good format. Interpalotation is done over a given grid. 0 is given outside the range of definition. 
+
+`data/cross_section_data`
+Folder containing cross section and differential cross section data.
 
 
 -------- How to use the code?
