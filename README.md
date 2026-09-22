@@ -81,7 +81,20 @@ These two steps should be repeated whenever the reaction list or the correspondi
 
 ### Running the Monte Carlo simulation
 
-An example of a complete simulation can be found in `examples/H_distribution.py`. The example contains the information required to define a simulation and illustrates how to call the main Monte Carlo function:
+An example of a complete simulation can be found in `examples/Hydrogen_distribution.py`. To run it from the terminal, go to the path `MC_supra_algorithm/` and type 
+```
+python3 -m examples.Hydrogen_distribution
+```
+
+If you want to run it from a Jupyter notebook cell in VScode, you have to define the working repository as `MC_supra_algorithm/`. For that type in the beginning of the .py file :
+```ruby
+from pathlib import Path
+import os
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+os.chdir(PROJECT_ROOT)
+```
+
+The example contains the information required to define a simulation and illustrates how to call the main Monte Carlo function:
 ```ruby
 monte_carlo_numba
 ```
