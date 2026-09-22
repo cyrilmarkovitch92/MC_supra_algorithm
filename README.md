@@ -1,7 +1,7 @@
 # Monte Carlo simulation of suprathermal particles
 
 <p align="center">
-  <img src="header.jpeg" width="800">
+  <img src="Image_Atmo_escape.jpg" width="400">
 </p>
 
 ## Overview
