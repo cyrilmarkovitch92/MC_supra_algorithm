@@ -1,6 +1,8 @@
 # Monte Carlo simulation of suprathermal particles
 
-Author: Cyril Markovitch
+<p align="center">
+  <img src="header.jpeg" width="800">
+</p>
 
 ## Overview
 
