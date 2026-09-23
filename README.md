@@ -10,7 +10,7 @@ This repository contains a Monte Carlo algorithm for calculating the energy dist
 
 The simulation follows `N_mc` suprathermal particles individually and computes their energy degradation collision by collision. For each collision, the reaction is selected probabilistically according to the corresponding collision frequencies, and the kinetic energy of the suprathermal particle is updated.
 
-The code is designed to simulate energy degradation in a background gas, taking into account the relevant elastic and inelastic collision processes.
+The code is designed to simulate energy degradation in a background gas, taking into account the relevant elastic and inelastic collision processes, along with the photochemistry and chemical reactions.
 
 The code requires Python 3 and several scientific Python packages. The required packages are listed in `requirements.txt`
 
