@@ -24,15 +24,20 @@ MC_supra_structured/
 ├── data/
 │   ├── cross_section_data/
 │   │   └── ...
-│   ├── build_CS_dico.py
+│   ├── CS_dico.pkl
+|   ├── tables_CS_theta_inverse.pkl
+|   ├── build_CS_dico.py
 │   └── build_tables.py
 │
 ├── physics/
+|   ├── constants.py
 │   ├── reactions.py
 │   └── species.py
 │
 ├── utils_functions/
-│   └── mc_function.py
+|   ├── cross_section_fct.py
+│   ├── mc_function.py
+|   └── usefull_fct.py
 │
 ├── examples/
 │   └── ...
