@@ -1,14 +1,9 @@
 import numpy as np
 from numba import njit
 
-import pickle
 
 from physics.constants import *
-
-# ------------- Load Cross section and differential cross section tables
-# with open('data/tables_CS_theta_inverse.pkl', 'rb') as file:
-#     tables = pickle.load(file)
-
+from physics.species import *
 
 
 @njit
@@ -133,14 +128,15 @@ def find_species_index(species_names, name_target):
             return int(i)
 
 @njit
-def monte_carlo_numba(N_mc, E_dist_list, Eth, E_cutoff, E0_random_list, W0, species_names, densities, tables_list, reac_channel_arr, m_projectile_arr , target_arr, m_target_arr, produces_secondary_arr, removes_projectile_arr, reaction_type_arr , threshold_arr, size_max_secondaries=100000, statistics=False, tau_cste=1e20, fcoll_ioniz=0,   Emin_secondary=1e10): #
+def monte_carlo_numba(m_supra, N_mc, E_dist_list, Eth, E_cutoff, E0_random_list, W0, species_names, densities, tables_list, reac_channel_arr, m_projectile_arr , target_arr, m_target_arr, produces_secondary_arr, removes_projectile_arr, reaction_type_arr , threshold_arr, size_max_secondaries=100000, statistics=False, tau_cste=1e20, fcoll_ioniz=0,   Emin_secondary=1e10): #
     """
-    Monte Carlo simulation of H atom energy distribution.
+    Monte Carlo simulation of suprathermal particles.
     Inputs:
-    - N_mc : number of Monte Carlo simulations = Number of H atoms launch at the energy E0 (initial energy of the H atom) !!!! Number of H atoms launch at the energy E0 (initial energy of the H atom) !!!!
-    - E_dist_list (len(E_dist_list)) : list of energy bins for the distribution [eV]
-    - E0_random_list (len(N_mc)) : initial energy of the H atom [eV] !!!! List of N_mc values !!!!
-    - W0 : production rate of H atoms [cm^-3 s^-1]
+    - m_supra : Mass of the Suprathermal particle. It should be defined in physics/species.py 
+    - N_mc : number of Monte Carlo simulations = Number of fast suprathermal particles tracked with an initial energy E0 
+    - E_dist_list (len(E_dist_list)) [eV]: list of energy bins for the distribution [eV]
+    - E0_random_list (len(N_mc)) [eV] : initial energies of the suprathermal atom [eV] - Uniformly distributed between [E0-dE0/2, E0+dE0/2]
+    - W0 [cm^-3 s^-1] : production rate of H atoms 
     - process_list : list of processes (reactions)
     - densities : list of densities for each target species [cm^-3]
     - tables_list : list of tables for cross sections and differential cross sections --> Usefull if ones want to change a cross section in its script to test
@@ -153,6 +149,9 @@ def monte_carlo_numba(N_mc, E_dist_list, Eth, E_cutoff, E0_random_list, W0, spec
     - tau_cste = tau/tau0 with (tau=time of reaction to remove H) and (tau0=typicall time between 2 collisions)
     
     """
+
+
+
     # =====================================================
     # compute new E_dist_list and dEi_list = energy distance between each bins
     # =====================================================
@@ -209,7 +208,7 @@ def monte_carlo_numba(N_mc, E_dist_list, Eth, E_cutoff, E0_random_list, W0, spec
 
         Ei = E_dist_list[iE]
         
-        vi = np.sqrt(2.0 * Ei * eV / mH) * 1e2
+        vi = np.sqrt(2.0 * Ei * eV / m_supra) * 1e2
 
         f_tot = 0.0
         
@@ -327,7 +326,7 @@ def monte_carlo_numba(N_mc, E_dist_list, Eth, E_cutoff, E0_random_list, W0, spec
                 
                 # #v_lab = np.sqrt(2.0 * E_lab * 1.6e-19 / mH) * 1e2
                 
-                v_proj_lab = np.sqrt(2.0 * E_lab * eV / mH) * 1e2 # cm/s
+                v_proj_lab = np.sqrt(2.0 * E_lab * eV / m_supra) * 1e2 # cm/s
                 
 
                 # ---- Velocities in lab frame before collision
@@ -606,19 +605,19 @@ def monte_carlo_numba(N_mc, E_dist_list, Eth, E_cutoff, E0_random_list, W0, spec
     # =====================================================
     # Final distribution & yield
     # =====================================================
-    H_distrib = np.zeros(bin_dist)
+    Energy_distrib = np.zeros(bin_dist)
 
     for b in range(bin_dist):
         freq = frequency_tot_distrib_sum[b]
         if freq > 0.0 and np.isfinite(freq):
-            H_distrib[b] = (
+            Energy_distrib[b] = (
                 W0 * (N_dist_list[b] / N_mc) / (freq * dEi_list[b])
             )
 
     Yield = proba_sum_cascade/N_mc
 
     return ( E_dist_list,
-        H_distrib,
+        Energy_distrib,
         H_distrib_table,
         Yield,
         SE_distrib_table,
