@@ -49,7 +49,7 @@ MC_supra_structured/
 
 ### Main Files
 
-`utils_functions/mc_function.py` : Contains the main Monte Carlo algorithm, implemented in the function monte_carlo_numba.This function performs the particle tracking and calculates the resulting energy distribution and reaction yields.
+`utils_functions/mc_function.py` : Contains the main Monte Carlo algorithm, implemented in the function `monte_carlo_numba`.This function performs the particle tracking and calculates the resulting energy distribution and reaction yields.
 
 `physics/reactions.py` : Contains the reactions considered in the simulation.
 Reactions are implemented as Python classes containing the relevant physical parameters and properties of each process.
